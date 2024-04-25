@@ -36,7 +36,7 @@ public class ArtistController {
         }
         return ResponseEntity.ok(artist);
     }
-    @GetMapping("/{name}")
+    @GetMapping("/ByName/{name}")
     public ResponseEntity<?> getArtistByName(@PathVariable("name") String name){
         Artist artist = artistService.findByName(name);
         if(artist == null){
@@ -44,18 +44,18 @@ public class ArtistController {
         }
         return ResponseEntity.ok(artist);
     }
-    @GetMapping("/tracksByArtist/{id}")
-    public ResponseEntity<?> getArtistByName(@PathVariable("id") int id){
-        List<Track> tracks = trackService.tracksByArtist(id);
+    @GetMapping("/tracksByArtist/{trackId}")
+    public ResponseEntity<?> getTracksByArtist(@PathVariable("trackId") int trackId){
+        List<Track> tracks = trackService.tracksByArtist(trackId);
         if(tracks == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No tracks with artist: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No tracks with artist: " + trackId);
         }
         return ResponseEntity.ok(tracks);
     }
 
     @PostMapping()
     public ResponseEntity<?> addArtist(@RequestBody Artist artist){
-        Artist newArtist = artistService.addTrack(artist);
+        Artist newArtist = artistService.addArtist(artist);
 
         URI newResource = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -68,7 +68,7 @@ public class ArtistController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteArtist(@PathVariable("id") int id) {
-        boolean result = artistService.deleteTrack(id);
+        boolean result = artistService.deleteArtist(id);
         if(!result) {
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body("No artist with id: " + id);
         }
@@ -77,10 +77,10 @@ public class ArtistController {
     }
 
     @PutMapping ResponseEntity<?> updateArtist(@RequestBody Artist artist){
-        boolean result = artistService.updateTrack(artist);
+        boolean result = artistService.updateArtist(artist);
         if(!result){
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
-                    .body("No track with id: " + artist.getIdArtist());
+                    .body("No artist with id: " + artist.getIdArtist());
         }
         return ResponseEntity.noContent().build();
     }

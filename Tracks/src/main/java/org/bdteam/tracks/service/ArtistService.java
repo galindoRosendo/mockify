@@ -1,10 +1,7 @@
 package org.bdteam.tracks.service;
 
 import org.bdteam.tracks.dao.ArtistRepository;
-import org.bdteam.tracks.dao.TrackRepository;
 import org.bdteam.tracks.domain.Artist;
-import org.bdteam.tracks.domain.Track;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,14 +13,14 @@ public class ArtistService {
     public ArtistService(ArtistRepository artistRepository){
         this.artistRepository = artistRepository;
     }
-    public Artist addTrack(Artist artist){
+    public Artist addArtist(Artist artist){
         Artist trackInserted = artistRepository.insert(artist);
         return trackInserted;
     }
-    public boolean deleteTrack(int id) {
+    public boolean deleteArtist(int id) {
         return artistRepository.delete(id);
     }
-    public boolean updateTrack(Artist artist){
+    public boolean updateArtist(Artist artist){
         return artistRepository.update(artist);
     }
     public Artist findById(int id){
